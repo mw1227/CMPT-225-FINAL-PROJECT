@@ -16,8 +16,8 @@ Using benchmark.pp to compare these 4 hash table collision resolution strategies
 ## How to build & run
 
 ```bash
-make        
-make run    
+make # build
+make run # run
 ```
 
 ## Output
