@@ -20,8 +20,3 @@ make # build
 make run # run
 ```
 
-## Output
-
-- `results.csv` — raw benchmark data
-- `latex_coords.txt` — pgfplots coordinates
-
