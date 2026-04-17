@@ -14,19 +14,20 @@ public:
         }
 
         size_t idx = hash_(key, cap_);
+        int first_tombstone = -1;
 
         for (size_t i = 0; i < cap_; i++) {
             size_t pos = (idx + i) & (cap_ - 1);  // power-of-2 mod
 
             if (slots_[pos].state == SlotState::EMPTY) {
-                slots_[pos] = {key, value, SlotState::OCCUPIED};
+                size_t insert_pos = (first_tombstone >= 0) ? first_tombstone : pos;
+                slots_[insert_pos] = {key, value, SlotState::OCCUPIED};
                 size_++;
+                if (first_tombstone >= 0) tombstones_--;
                 return;
             }
             if (slots_[pos].state == SlotState::DELETED) {
-                slots_[pos] = {key, value, SlotState::OCCUPIED};
-                size_++;
-                tombstones_--;
+                if (first_tombstone < 0) first_tombstone = pos;
                 return;
             }
             if (slots_[pos].key == key) {
